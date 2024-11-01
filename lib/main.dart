@@ -6,7 +6,7 @@ void main() {
   runApp(SplashScreen(
     key: UniqueKey(),
     onInitializationComplete: () {
-      runApp(const TTSApp());
+      runApp(const TTSApp(child: null,));
     },
   ));
 }
