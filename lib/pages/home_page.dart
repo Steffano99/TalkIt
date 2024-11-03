@@ -5,12 +5,13 @@ import 'package:demo_app/widgets/text_field.dart';
 
 
 class TTSApp extends StatelessWidget {
-  const TTSApp({super.key, required child});
+  const TTSApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
       home:  Scaffold(
+        backgroundColor: const Color.fromARGB(255, 238, 230, 230),
         appBar:  AppBar(
           toolbarHeight: 120,
           backgroundColor: Colors.white,
@@ -27,7 +28,7 @@ class TTSApp extends StatelessWidget {
                 child: Image.asset('images/voice.PNG',height: 200,width: 190,),),
             ],
           ),
-          body: const TTSForm(),
+          body: const Center(child: TTSForm()),
 
       ),
     );
