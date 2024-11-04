@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 
 class MyTextField extends StatelessWidget {
-  const MyTextField({super.key});
-
+  const MyTextField({super.key, required TextEditingController controller});
+ 
   @override
   Widget build(BuildContext context) {
     return  Center(
