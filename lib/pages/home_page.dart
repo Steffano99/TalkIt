@@ -11,17 +11,22 @@ class TTSApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       home:  Scaffold(
-        backgroundColor: const Color.fromARGB(255, 238, 230, 230),
+        backgroundColor: Colors.white,
         appBar:  AppBar(
           toolbarHeight: 120,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.blue[400],
           leading:  IconButton(
             icon:const Icon(Icons.menu,
-            color: Colors.black,
+            color: Colors.white,
             ),
                    onPressed: (){},
             ),
-            title: const Text('Listen to your texts',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),),
+            title: const Text(
+              'Listen to your texts',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                 color: Colors.white,
+                 ),),
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right:16),
@@ -52,7 +57,7 @@ class _TTSFormState extends State<TTSForm> {
         child: Column(
           children: [
             MyTextField(),
-            SizedBox(height: 15,),
+            SizedBox(height: 20,),
              MyElevatedButton(),
         ]),
       )
