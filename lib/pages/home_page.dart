@@ -4,7 +4,6 @@ import 'package:audioplayers/audioplayers.dart'; // For audio playback on all pl
 import 'package:demo_app/services/tts_service.dart';
 import 'package:demo_app/widgets/elevated_button.dart';
 import 'package:demo_app/widgets/text_field.dart';
-import 'package:http/http.dart' as http; // Ensure you have this import for the TTSService
 
 class TTSApp extends StatelessWidget {
   const TTSApp({super.key});
@@ -50,21 +49,22 @@ class TTSForm extends StatefulWidget {
 
 class _TTSFormState extends State<TTSForm> {
   final controller = TextEditingController();
-  final ttsservice = TTSService();
-  final AudioPlayer _audioPlayer = AudioPlayer(); // Audio player instance for cross-platform playback
+  final ttsService = TTSService();
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   Future<void> speak() async {
     try {
-      final response = await ttsservice.convertTextToSpeech(controller.text);
+      final response = await ttsService.convertTextToSpeech(
+        text: controller.text,
+        pitch: 1.0,
+        speed: 1.0,
+      );
       if (response.statusCode == 200) {
-        final Uint8List bytes = response.bodyBytes; // Ensure this is the correct type
-        await _audioPlayer.playBytes(bytes);
-      } else {
-        print('Error: ${response.statusCode} ${response.reasonPhrase}');
-      }
-    } catch (e) {
-      print("Error: $e");
-    }
+        final Uint8List bytes = response.bodyBytes; // Extract the audio bytes
+        await _audioPlayer.playBytes(bytes); // Play the audio using AudioPlayer
+      } 
+    // ignore: empty_catches
+    } catch (e) {}
   }
 
   @override
@@ -73,12 +73,12 @@ class _TTSFormState extends State<TTSForm> {
       child: Padding(
         padding: const EdgeInsets.only(top: 150.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min, // Keeps the form centered vertically
+          mainAxisSize: MainAxisSize.min,
           children: [
-            MyTextField(controller: controller), // Pass controller to text field
+            MyTextField(controller: controller),
             const SizedBox(height: 20),
             MyElevatedButton(
-              onPressed: () => speak(),
+              onPressed: speak,
             ),
           ],
         ),
@@ -89,13 +89,13 @@ class _TTSFormState extends State<TTSForm> {
   @override
   void dispose() {
     controller.dispose();
-    _audioPlayer.dispose(); // Dispose of audio player
+    _audioPlayer.dispose(); // Dispose of the audio player
     super.dispose();
   }
 }
 
-extension on AudioPlayer {
+extension AudioPlayerExtension on AudioPlayer {
   Future<void> playBytes(Uint8List bytes) async {
-    await playBytes(bytes); // Ensure this calls the correct method
+    await play(BytesSource(bytes)); // Use BytesSource for audio playback from bytes
   }
 }
